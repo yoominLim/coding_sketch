@@ -121,53 +121,56 @@ h1{
 }
 .out .mask{opacity:1;}
 
-/* 연기 */
-.smoke{
+/* 🔥 아지랑이(열기) */
+.haze{
   position:absolute;
   left:var(--x);
   top:var(--y);
-  width:18px;
-  height:50px;                 /* ✅ 길게 */
+  width:22px;
+  height:80px;
   transform:translate(-50%,-60%);
-  border-radius:999px;         /* ✅ 타원 */
-  opacity:0;
   pointer-events:none;
+  opacity:0;
 
-  /* ✅ 위는 연하고 아래가 진한 연기 느낌 */
+  /* 투명한 열기 기둥 */
   background: linear-gradient(
     to top,
-    rgba(210,210,210,0.00),
-    rgba(210,210,210,0.65),
-    rgba(240,240,240,0.10)
+    rgba(255,255,255,0.00),
+    rgba(255,255,255,0.18),
+    rgba(255,255,255,0.00)
   );
 
-  filter: blur(1.6px);
+  filter: blur(3px);
 }
 
-/* 불 끄면 연기 올라가며 좌우로 살짝 흔들림 */
-.out .smoke{
-  animation: smokeTall 1.6s ease-out forwards;
+/* 불 끄면 아지랑이 발생 */
+.out .haze{
+  animation: hazeUp 1.8s ease-out forwards;
 }
 
-@keyframes smokeTall{
+@keyframes hazeUp{
   0%{
     opacity:0;
-    transform:translate(-50%,-20%) scale(0.7);
+    transform:translate(-50%,-10%) scaleX(0.6);
   }
   15%{
-    opacity:0.9;
+    opacity:.7;
   }
-  35%{
-    transform:translate(-52%,-70%) scale(1.0) rotate(-2deg);
+  30%{
+    transform:translate(-52%,-40%) scaleX(1.0);
   }
-  60%{
-    transform:translate(-48%,-120%) scale(1.25) rotate(2deg);
+  55%{
+    transform:translate(-47%,-85%) scaleX(1.2);
+  }
+  80%{
+    transform:translate(-50%,-130%) scaleX(1.4);
   }
   100%{
     opacity:0;
-    transform:translate(-50%,-190%) scale(1.6) rotate(0deg);
+    transform:translate(-50%,-170%) scaleX(1.6);
   }
 }
+
 
 
 /* 🌬️ 바람 */
@@ -248,11 +251,8 @@ button{
       <div class="mask" style="--x:var(--flame1-x);--y:var(--flame1-y)"></div>
       <div class="mask" style="--x:var(--flame2-x);--y:var(--flame2-y)"></div>
 
-      <div class="smoke" style="--x:var(--flame1-x);--y:var(--flame1-y)"></div>
-      <div class="smoke" style="--x:var(--flame1-x);--y:var(--flame1-y)"></div>
-
-      <div class="smoke" style="--x:var(--flame2-x);--y:var(--flame2-y)"></div>
-      <div class="smoke" style="--x:var(--flame2-x);--y:var(--flame2-y)"></div>
+      <div class="haze" style="--x:var(--flame1-x);--y:var(--flame1-y)"></div>
+      <div class="haze" style="--x:var(--flame2-x);--y:var(--flame2-y)"></div>
 
 
       <div class="wind"></div>
@@ -303,6 +303,7 @@ function loop(){
 </script>
 </body>
 </html>
+
 
 
 
