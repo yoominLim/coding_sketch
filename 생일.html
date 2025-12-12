@@ -1,356 +1,227 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>후~ 불면 촛불 꺼짐 (B: 불꽃 추가 X)</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>조나단언니 생일추카 케이크</title>
 
-  <style>
-    :root{
-      /* ✅ 불꽃 위치(%) — 네 사진 기준. 필요하면 여기만 미세조정 */
-      --flame1-x: 39%;
-      --flame1-y: 12%;
-      --flame2-x: 63%;
-      --flame2-y: 12%;
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
 
-      /* ✅ “꺼짐” 마스크 크기(불꽃을 덮을 정도로) */
-      --mask-size: 54px;     /* 커지면 더 확실히 가려짐 */
-      --mask-feather: 14px;  /* 가장자리 부드럽게 */
-      --mask-color: #000;    /* 사진 배경이 검정이라 자연스러움 */
-    }
+<style>
+:root{
+  --flame1-x: 39%;
+  --flame1-y: 30%;
+  --flame2-x: 63%;
+  --flame2-y: 28%;
 
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      min-height:100vh;
-      display:grid;
-      place-items:center;
-      background: radial-gradient(900px 500px at 50% 20%, rgba(255,255,255,.08), transparent 60%),
-                  linear-gradient(180deg,#05060b,#0b0f1b);
-      color:#fff;
-      font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", Segoe UI, Roboto, Helvetica, Arial;
-      padding:16px;
-    }
+  --mask-size: 56px;
+  --mask-feather: 16px;
+}
 
-    .card{
-      width:min(520px, 92vw);
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:18px;
-      padding:14px;
-      box-shadow: 0 18px 50px rgba(0,0,0,.45);
-      backdrop-filter: blur(10px);
-    }
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:16px;
+  background:
+    radial-gradient(circle at 10% 10%, #ffe0fb 0, transparent 55%),
+    radial-gradient(circle at 90% 20%, #ffd8e2 0, transparent 55%),
+    linear-gradient(180deg,#fff0f6,#ffe8f2,#ffeef9);
+  font-family:'Noto Sans KR', sans-serif;
+}
 
-    h1{ margin:4px 0 6px; font-size:18px; opacity:.95; }
-    .sub{ margin:0 0 10px; font-size:13px; opacity:.8; line-height:1.35; }
+.card{
+  width:min(420px,100%);
+  padding:18px;
+  border-radius:20px;
+  background:rgba(255,255,255,.9);
+  box-shadow:0 18px 40px rgba(255,120,170,.45);
+  text-align:center;
+}
 
-    .stage{
-      position:relative;
-      border-radius:16px;
-      overflow:hidden;
-      background:#000;
-      aspect-ratio: 1 / 1;
-    }
+.script{
+  font-family:'Pacifico', cursive;
+  font-size:24px;
+  color:#ff5ca8;
+}
 
-    .cake-img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
+h1{
+  margin:4px 0;
+  color:#ff4d9f;
+}
 
-      /* 사진이 살짝 살아있는 느낌(미세 호흡) */
-      animation: breathe 4.8s ease-in-out infinite;
-      transform-origin: 50% 60%;
-      filter: contrast(1.03) saturate(1.05);
-    }
-    @keyframes breathe{
-      0%,100%{ transform: scale(1) translateY(0px); }
-      50%    { transform: scale(1.01) translateY(-1.5px); }
-    }
+.sub{font-size:13px;opacity:.8;}
 
-    /* 효과 레이어 */
-    .fx{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-    }
+.stage{
+  position:relative;
+  height:260px;
+  border-radius:18px;
+  background:linear-gradient(180deg,#3a0f5c,#160b32);
+  margin:12px 0;
+  overflow:hidden;
+}
 
-    /* ✅ 촛불 “꺼짐” 마스크(평소엔 안 보임) */
-    .mask{
-      position:absolute;
-      width: var(--mask-size);
-      height: var(--mask-size);
-      left: var(--x);
-      top:  var(--y);
-      transform: translate(-50%,-50%);
-      border-radius:50%;
-      opacity:0;
-      transition: opacity .18s ease;
-      z-index: 3;
+/* 🎂 케이크 사진 */
+.cake-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  animation:breathe 5s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.01);}
+}
 
-      /* 가장자리 퍼지는 검정 원 (티 안 나게) */
-      background: radial-gradient(circle,
-        var(--mask-color) 0 calc(100% - var(--mask-feather)),
-        rgba(0,0,0,0) 100%
-      );
-    }
+.fx{position:absolute;inset:0;pointer-events:none;}
 
-    /* ✅ 꺼질 때 마스크 표시 */
-    .out .mask{ opacity:1; }
+/* 🔥 가림 */
+.mask{
+  position:absolute;
+  width:var(--mask-size);
+  height:var(--mask-size);
+  left:var(--x);top:var(--y);
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  opacity:0;
+  background:radial-gradient(circle,#000 60%,transparent 100%);
+}
+.out .mask{opacity:1;}
 
-    /* 연기 */
-    .smoke{
-      position:absolute;
-      width:12px;
-      height:12px;
-      left: var(--x);
-      top:  var(--y);
-      transform: translate(-50%,-50%);
-      border-radius:50%;
-      background: rgba(230,230,230,.8);
-      filter: blur(1px);
-      opacity:0;
-      z-index: 4;
-    }
+/* 💨 연기 */
+.smoke{
+  position:absolute;
+  width:12px;height:12px;
+  left:var(--x);top:var(--y);
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:rgba(230,230,230,.8);
+  opacity:0;
+}
+.out .smoke{animation:smoke 1.2s forwards;}
+@keyframes smoke{
+  to{transform:translate(-50%,-80px) scale(2);opacity:0;}
+}
 
-    .out .smoke{ animation: smokeUp 1.2s ease forwards; }
+/* 🌬️ 바람 */
+.wind{
+  position:absolute;
+  left:-40%;
+  top:40%;
+  width:40%;
+  height:6px;
+  border-radius:50%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);
+  opacity:0;
+}
+.out .wind{animation:wind 0.6s ease-out;}
+@keyframes wind{
+  0%{opacity:0;transform:translateX(0);}
+  30%{opacity:.8;}
+  100%{opacity:0;transform:translateX(220%);}
+}
 
-    @keyframes smokeUp{
-      0%  { opacity:0; transform:translate(-50%,-50%) translateY(10px) scale(.6); }
-      20% { opacity:.6; }
-      100%{ opacity:0; transform:translate(-50%,-50%) translateY(-40px) scale(2.2); }
-    }
+/* 🎆 폭죽 */
+.firework{
+  position:absolute;
+  left:50%;top:35%;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:#ff8ec0;
+  opacity:0;
+}
+.out .firework{animation:pop 0.8s ease-out forwards;}
+@keyframes pop{
+  0%{opacity:1;transform:scale(1);}
+  100%{opacity:0;transform:scale(6);}
+}
 
-    /* “불 꺼진 뒤” 전체 분위기 살짝 어둡게(선택) */
-    .dim{
-      position:absolute;
-      inset:0;
-      background: radial-gradient(600px 420px at 50% 40%, rgba(0,0,0,0.00), rgba(0,0,0,0.24));
-      opacity:0;
-      transition: opacity .30s ease;
-      pointer-events:none;
-      z-index: 2;
-      mix-blend-mode:multiply;
-    }
-    .fx.out ~ .dim{ opacity:1; }
-
-    /* UI */
-    .meter{
-      margin:10px 0 0;
-      width:100%;
-      height:12px;
-      border-radius:999px;
-      background: rgba(255,255,255,.14);
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.12);
-    }
-    .bar{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg,#51cf66,#ffd43b,#ff6b6b);
-      transition: width 80ms linear;
-    }
-    .status{ margin-top:8px; font-size:12px; opacity:.85; min-height:18px; }
-
-    .controls{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-    button{
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.10);
-      color:#fff;
-      padding:9px 12px;
-      border-radius:12px;
-      cursor:pointer;
-      font-weight:700;
-    }
-    button:disabled{ opacity:.55; cursor:not-allowed; }
-
-    .msg{
-      margin-top:10px;
-      font-size:15px;
-      font-weight:800;
-      opacity:0;
-      transform: translateY(6px);
-      transition:.35s ease;
-    }
-    .msg.show{ opacity:1; transform: translateY(0); }
-  </style>
+/* UI */
+.meter{height:12px;background:#ffe3f1;border-radius:999px;overflow:hidden;}
+.bar{height:100%;width:0%;background:linear-gradient(90deg,#51cf66,#ffd43b,#ff6b6b);}
+button{
+  margin-top:10px;
+  padding:8px 14px;
+  border:none;
+  border-radius:999px;
+  background:#ff8ec0;
+  color:white;
+  font-weight:700;
+}
+.msg{margin-top:8px;color:#ff4d9f;font-weight:700;opacity:0;}
+.msg.show{opacity:1;}
+</style>
 </head>
 
 <body>
-  <div class="card">
-    <h1>🎂 B버전: 사진 불꽃 그대로 + “꺼짐”만 연출</h1>
-    <p class="sub">사진은 <b>cake.png</b> 1장만 올려두면 돼! “후~” 하면 불꽃이 꺼진 것처럼 보여.</p>
+<div class="card">
+  <div class="script">Happy Birthday</div>
+  <h1>조나단언니 생일추카💛</h1>
+  <div class="sub">마이크 켜고 “후~” 불어봐!</div>
 
-    <div class="stage">
-      <img class="cake-img" src="cake.png" alt="birthday cake photo" />
+  <div class="stage">
+    <img src="cake.png" class="cake-img">
 
-      <div class="fx" id="fx">
-        <!-- 불꽃 자리 2개: 평소엔 안 보이다가(opacity 0) 후~ 하면 검게 덮음 -->
-        <div class="mask" style="--x: var(--flame1-x); --y: var(--flame1-y);"></div>
-        <div class="mask" style="--x: var(--flame2-x); --y: var(--flame2-y);"></div>
+    <div class="fx" id="fx">
+      <div class="mask" style="--x:var(--flame1-x);--y:var(--flame1-y)"></div>
+      <div class="mask" style="--x:var(--flame2-x);--y:var(--flame2-y)"></div>
 
-        <!-- 연기 2개 -->
-        <div class="smoke" style="--x: var(--flame1-x); --y: var(--flame1-y);"></div>
-        <div class="smoke" style="--x: var(--flame2-x); --y: var(--flame2-y);"></div>
-      </div>
+      <div class="smoke" style="--x:var(--flame1-x);--y:var(--flame1-y)"></div>
+      <div class="smoke" style="--x:var(--flame2-x);--y:var(--flame2-y)"></div>
 
-      <div class="dim"></div>
+      <div class="wind"></div>
+      <div class="firework"></div>
     </div>
-
-    <div class="meter"><div class="bar" id="bar"></div></div>
-    <div class="status" id="status">상태: 대기 중 (마이크를 켜면 ‘후~’ 감지를 시작해요)</div>
-
-    <div class="controls">
-      <button id="btnStart">🎙️ 마이크 켜기</button>
-      <button id="btnRelight" disabled>🔥 다시 켜기</button>
-      <button id="btnStop" disabled>⏹️ 마이크 끄기</button>
-    </div>
-
-    <div class="msg" id="msg">🎉 촛불이 꺼졌어요! 소원 빌어! 🎉</div>
   </div>
 
-  <script>
-    let audioCtx, analyser, micStream, sourceNode, rafId;
-    let isRunning = false;
-    let blown = false;
+  <div class="meter"><div class="bar" id="bar"></div></div>
+  <button id="btn">🎙️ 마이크 켜기</button>
+  <div class="msg" id="msg">🎉 촛불이 꺼졌어요! 🎉</div>
+</div>
 
-    const THRESHOLD = 0.22; // 민감도(작을수록 잘 꺼짐)
-    const HOLD_MS = 220;    // ‘후~’ 지속 시간
+<script>
+const btn=document.getElementById('btn');
+const fx=document.getElementById('fx');
+const bar=document.getElementById('bar');
+const msg=document.getElementById('msg');
+let ctx,an,st,above=null;
 
-    const bar = document.getElementById('bar');
-    const statusEl = document.getElementById('status');
-    const msgEl = document.getElementById('msg');
-    const fx = document.getElementById('fx');
+btn.onclick=async()=>{
+  st=await navigator.mediaDevices.getUserMedia({audio:true});
+  ctx=new AudioContext();
+  an=ctx.createAnalyser();
+  an.fftSize=2048;
+  ctx.createMediaStreamSource(st).connect(an);
+  loop();
+};
 
-    const btnStart = document.getElementById('btnStart');
-    const btnRelight = document.getElementById('btnRelight');
-    const btnStop = document.getElementById('btnStop');
+function loop(){
+  const b=new Float32Array(an.fftSize);
+  an.getFloatTimeDomainData(b);
+  const rms=Math.sqrt(b.reduce((s,v)=>s+v*v,0)/b.length);
+  const lv=Math.min(1,rms*3);
+  bar.style.width=(lv*100)+'%';
 
-    let aboveSince = null;
-
-    function setStatus(t){ statusEl.textContent = "상태: " + t; }
-
-    function computeRMS(data){
-      let sum = 0;
-      for(let i=0;i<data.length;i++){
-        const v = data[i];
-        sum += v*v;
-      }
-      return Math.sqrt(sum / data.length);
+  const t=performance.now();
+  if(lv>.22){
+    if(!above) above=t;
+    if(t-above>220){
+      fx.classList.add('out');
+      msg.classList.add('show');
+      return;
     }
+  }else above=null;
 
-    function blowOut(){
-      blown = true;
-      fx.classList.add('out');   // ✅ 불꽃 추가 없이 “꺼짐”만 연출
-      msgEl.classList.add('show');
-      btnRelight.disabled = false;
-      setStatus("후~ 감지! 촛불이 꺼졌어요 🎉");
-    }
-
-    function relight(){
-      blown = false;
-      fx.classList.remove('out');
-
-      // 연기 애니메이션 리셋
-      fx.querySelectorAll('.smoke').forEach(s=>{
-        s.style.animation='none';
-        void s.offsetWidth;
-        s.style.animation='';
-      });
-
-      msgEl.classList.remove('show');
-      bar.style.width = "0%";
-      btnRelight.disabled = true;
-      aboveSince = null;
-
-      setStatus(isRunning ? "촛불 켜짐! ‘후~’ 불어보세요" : "촛불 켜짐! 마이크를 켜면 ‘후~’ 감지를 시작해요");
-    }
-
-    btnRelight.addEventListener('click', relight);
-
-    function loop(){
-      if(!isRunning || !analyser) return;
-
-      const buffer = new Float32Array(analyser.fftSize);
-      analyser.getFloatTimeDomainData(buffer);
-
-      const rms = computeRMS(buffer);
-      const level = Math.min(1, rms * 3.2);
-      bar.style.width = (level * 100).toFixed(0) + "%";
-
-      const now = performance.now();
-
-      if(!blown){
-        if(level >= THRESHOLD){
-          if(aboveSince === null) aboveSince = now;
-          const held = now - aboveSince;
-
-          if(held >= HOLD_MS){
-            blowOut();
-          }else{
-            setStatus("소리 감지 중… 조금만 더 크게 ‘후~’ (레벨: " + level.toFixed(2) + ")");
-          }
-        }else{
-          aboveSince = null;
-          setStatus("촛불 켜짐! ‘후~’ 불어보세요 (레벨: " + level.toFixed(2) + ")");
-        }
-      }
-
-      rafId = requestAnimationFrame(loop);
-    }
-
-    async function startMic(){
-      try{
-        micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioCtx.createAnalyser();
-        analyser.fftSize = 2048;
-
-        sourceNode = audioCtx.createMediaStreamSource(micStream);
-        sourceNode.connect(analyser);
-
-        isRunning = true;
-        btnStart.disabled = true;
-        btnStop.disabled = false;
-        btnRelight.disabled = false;
-
-        setStatus("마이크 켜짐! ‘후~’ 불어보세요");
-        loop();
-      }catch(e){
-        console.error(e);
-        setStatus("마이크 권한이 필요해요. Safari 설정에서 마이크 허용 후 다시 시도해주세요.");
-      }
-    }
-
-    function stopMic(){
-      isRunning = false;
-      if(rafId) cancelAnimationFrame(rafId);
-      rafId = null;
-
-      if(micStream){
-        micStream.getTracks().forEach(t => t.stop());
-        micStream = null;
-      }
-      if(audioCtx){
-        audioCtx.close();
-        audioCtx = null;
-      }
-
-      btnStart.disabled = false;
-      btnStop.disabled = true;
-      bar.style.width = "0%";
-      setStatus("마이크 꺼짐. (화면은 그대로)");
-    }
-
-    btnStart.addEventListener('click', startMic);
-    btnStop.addEventListener('click', stopMic);
-
-    // 초기
-    relight();
-  </script>
+  requestAnimationFrame(loop);
+}
+</script>
 </body>
 </html>
+
+
 
 
 
