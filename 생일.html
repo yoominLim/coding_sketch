@@ -121,53 +121,72 @@ h1{
 }
 .out .mask{opacity:1;}
 
-/* 🔥 아지랑이(열기) */
+/* 🔥 아지랑이(열기) — 바람에 휘어짐 + 선명 */
 .haze{
   position:absolute;
   left:var(--x);
   top:var(--y);
-  width:22px;
-  height:80px;
+  width:26px;
+  height:90px;
   transform:translate(-50%,-60%);
   pointer-events:none;
   opacity:0;
 
-  /* 투명한 열기 기둥 */
+  /* 열기 기둥(중앙이 가장 선명) */
   background: linear-gradient(
     to top,
     rgba(255,255,255,0.00),
-    rgba(255,255,255,0.18),
+    rgba(255,255,255,0.28),
+    rgba(255,255,255,0.38),
+    rgba(255,255,255,0.20),
     rgba(255,255,255,0.00)
   );
 
-  filter: blur(3px);
+  /* 선명도 핵심 */
+  filter:
+    blur(2.2px)              /* 너무 흐려지지 않게 */
+    contrast(1.35)
+    saturate(1.1);
 }
 
 /* 불 끄면 아지랑이 발생 */
 .out .haze{
-  animation: hazeUp 1.8s ease-out forwards;
+  animation: hazeWind 1.9s cubic-bezier(.22,.61,.36,1) forwards;
 }
 
-@keyframes hazeUp{
+/* 🌬️ 바람에 휘는 아지랑이 */
+@keyframes hazeWind{
   0%{
     opacity:0;
-    transform:translate(-50%,-10%) scaleX(0.6);
+    transform:translate(-50%,-10%) scaleX(0.7) skewX(0deg);
   }
-  15%{
-    opacity:.7;
+  12%{
+    opacity:0.85;
   }
   30%{
-    transform:translate(-52%,-40%) scaleX(1.0);
+    transform:
+      translate(-46%,-45%)
+      scaleX(1.05)
+      skewX(-4deg);
   }
   55%{
-    transform:translate(-47%,-85%) scaleX(1.2);
+    transform:
+      translate(-42%,-95%)
+      scaleX(1.25)
+      skewX(-8deg);
   }
-  80%{
-    transform:translate(-50%,-130%) scaleX(1.4);
+  78%{
+    transform:
+      translate(-40%,-140%)
+      scaleX(1.45)
+      skewX(-10deg);
   }
   100%{
     opacity:0;
-    transform:translate(-50%,-170%) scaleX(1.6);
+    transform:
+      translate(-38%,-180%)
+      scaleX(1.65)
+      skewX(-12deg);
   }
 }
 
@@ -256,6 +275,7 @@ button{
 
       <div class="haze" style="--x:var(--flame1-x);--y:var(--flame2-y)"></div>
       <div class="haze" style="--x:var(--flame2-x);--y:var(--flame2-y)"></div>
+      
 
 
       <div class="wind"></div>
@@ -306,6 +326,7 @@ function loop(){
 </script>
 </body>
 </html>
+
 
 
 
