@@ -122,38 +122,53 @@ h1{
 .out .mask{opacity:1;}
 
 /* 연기 */
-/* 💨 연기 (더 크고 오래 남게) */
 .smoke{
   position:absolute;
-  width:14px;
-  height:14px;
   left:var(--x);
   top:var(--y);
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:rgba(230,230,230,.9);
-  filter: blur(1.5px);
+  width:18px;
+  height:50px;                 /* ✅ 길게 */
+  transform:translate(-50%,-60%);
+  border-radius:999px;         /* ✅ 타원 */
   opacity:0;
+  pointer-events:none;
+
+  /* ✅ 위는 연하고 아래가 진한 연기 느낌 */
+  background: linear-gradient(
+    to top,
+    rgba(210,210,210,0.00),
+    rgba(210,210,210,0.65),
+    rgba(240,240,240,0.10)
+  );
+
+  filter: blur(1.6px);
 }
 
-/* 불 끄면 연기 올라감 */
+/* 불 끄면 연기 올라가며 좌우로 살짝 흔들림 */
 .out .smoke{
-  animation: smokeUp 1.6s ease-out forwards;
+  animation: smokeTall 1.6s ease-out forwards;
 }
 
-@keyframes smokeUp{
+@keyframes smokeTall{
   0%{
     opacity:0;
-    transform:translate(-50%,-40%) scale(.6);
+    transform:translate(-50%,-20%) scale(0.7);
   }
-  20%{
-    opacity:.9;
+  15%{
+    opacity:0.9;
+  }
+  35%{
+    transform:translate(-52%,-70%) scale(1.0) rotate(-2deg);
+  }
+  60%{
+    transform:translate(-48%,-120%) scale(1.25) rotate(2deg);
   }
   100%{
     opacity:0;
-    transform:translate(-50%,-140%) scale(2.8);
+    transform:translate(-50%,-190%) scale(1.6) rotate(0deg);
   }
 }
+
 
 /* 🌬️ 바람 */
 .wind{
@@ -288,6 +303,7 @@ function loop(){
 </script>
 </body>
 </html>
+
 
 
 
