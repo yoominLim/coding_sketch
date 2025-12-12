@@ -203,8 +203,17 @@ h1{
 }
 .out .firework{animation:pop .8s ease-out forwards;}
 @keyframes pop{
-  0%{opacity:1;transform:scale(1);}
-  100%{opacity:0;transform:scale(6);}
+  0%{
+    opacity:0;              /* 시작점 숨김 */
+    transform:scale(0.2);
+  }
+  30%{
+    opacity:1;
+  }
+  100%{
+    opacity:0;
+    transform:scale(6);
+  }
 }
 
 /* ===== UI ===== */
@@ -303,6 +312,7 @@ function loop(){
 </script>
 </body>
 </html>
+
 
 
 
