@@ -122,18 +122,37 @@ h1{
 .out .mask{opacity:1;}
 
 /* 연기 */
+/* 💨 연기 (더 크고 오래 남게) */
 .smoke{
   position:absolute;
-  width:12px;height:12px;
-  left:var(--x);top:var(--y);
+  width:14px;
+  height:14px;
+  left:var(--x);
+  top:var(--y);
   transform:translate(-50%,-50%);
   border-radius:50%;
-  background:rgba(230,230,230,.8);
+  background:rgba(230,230,230,.9);
+  filter: blur(1.5px);
   opacity:0;
 }
-.out .smoke{animation:smoke 1.2s forwards;}
-@keyframes smoke{
-  to{transform:translate(-50%,-80px) scale(2);opacity:0;}
+
+/* 불 끄면 연기 올라감 */
+.out .smoke{
+  animation: smokeUp 1.6s ease-out forwards;
+}
+
+@keyframes smokeUp{
+  0%{
+    opacity:0;
+    transform:translate(-50%,-40%) scale(.6);
+  }
+  20%{
+    opacity:.9;
+  }
+  100%{
+    opacity:0;
+    transform:translate(-50%,-140%) scale(2.8);
+  }
 }
 
 /* 🌬️ 바람 */
@@ -215,7 +234,11 @@ button{
       <div class="mask" style="--x:var(--flame2-x);--y:var(--flame2-y)"></div>
 
       <div class="smoke" style="--x:var(--flame1-x);--y:var(--flame1-y)"></div>
+      <div class="smoke" style="--x:var(--flame1-x);--y:var(--flame1-y)"></div>
+
       <div class="smoke" style="--x:var(--flame2-x);--y:var(--flame2-y)"></div>
+      <div class="smoke" style="--x:var(--flame2-x);--y:var(--flame2-y)"></div>
+
 
       <div class="wind"></div>
       <div class="firework"></div>
@@ -265,6 +288,7 @@ function loop(){
 </script>
 </body>
 </html>
+
 
 
 
